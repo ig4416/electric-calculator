@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7fb">
+  <title>전기 계산기</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="전기 계산기 홈"><span class="brand-mark">ϟ</span><span>전기 계산기</span></a>
+      <span class="offline"><i></i> 오프라인 사용 가능</span>
+    </header>
+    <section class="intro">
+      <div class="eyebrow">ELECTRICAL TOOLKIT <span></span> 간편 계산</div>
+      <h1>전기 계산기</h1>
+      <p>필요한 값을 입력하면 전력과 전류를 바로 계산합니다.</p>
+    </section>
+    <nav class="tabs" role="tablist" aria-label="계산 종류">
+      <button class="tab active" role="tab" aria-selected="true" data-panel="power"><span class="tab-icon">▤</span> 단상·삼상 전력</button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="vi"><span class="tab-icon">↗</span> 전압·전류</button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="eocr"><span class="tab-icon">◉</span> 삼상 EOCR</button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="convert"><span class="tab-icon">⇄</span> HP ↔ kW</button>
+    </nav>
+    <section class="workspace">
+      <div class="form-side">
+        <section class="panel active" id="panel-power" role="tabpanel">
+          <div class="section-heading"><div><span class="step">01</span><h2>전력 계산</h2></div><span class="unit-chip">kW</span></div>
+          <p class="helper">전압, 전류와 역률로 유효전력을 계산합니다.</p>
+          <div class="field">
+            <label>전원 방식</label>
+            <div class="segmented"><button type="button" class="selected" data-phase="single">단상</button><button type="button" data-phase="three">삼상</button></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label for="p-voltage">전압 <small>V</small></label><div class="input-wrap"><input id="p-voltage" type="number" min="0" step="any" placeholder="예: 220"><span>V</span></div></div>
+            <div class="field"><label for="p-current">전류 <small>A</small></label><div class="input-wrap"><input id="p-current" type="number" min="0" step="any" placeholder="예: 10"><span>A</span></div></div>
+          </div>
+          <div class="field"><label for="p-pf">역률 <small>0 초과 ~ 1 이하</small></label><div class="input-wrap"><input id="p-pf" type="number" min="0.01" max="1" step="0.01" value="0.9"><span>PF</span></div></div>
+          <button class="calculate" id="power-calc">전력 계산하기 <span>→</span></button>
+          <div class="clear-row"><button class="clear-button" type="button" data-clear="power">입력값 지우기</button></div>
+          <div class="result" id="power-result" aria-live="polite"><div class="result-label">계산 결과 <span>유효전력</span></div><div class="result-value">— <small>kW</small></div><div class="result-note">값을 입력하고 계산하기를 눌러 주세요.</div></div>
+        </section>
+        <section class="panel" id="panel-vi" role="tabpanel" hidden>
+          <div class="section-heading"><div><span class="step">02</span><h2>전압·전류 계산</h2></div><span class="unit-chip">V / A</span></div>
+          <p class="helper">전력과 한 가지 전기값으로 나머지 값을 구합니다.</p>
+          <div class="field"><label>전원 방식</label><div class="segmented"><button type="button" class="selected" data-phase="single">단상</button><button type="button" data-phase="three">삼상</button></div></div>
+          <div class="field"><label>구할 값</label><div class="segmented"><button type="button" class="selected" data-find="current">전류 (A)</button><button type="button" data-find="voltage">전압 (V)</button></div></div>
+          <div class="field-grid">
+            <div class="field"><label for="vi-power">유효전력 <small>kW</small></label><div class="input-wrap"><input id="vi-power" type="number" min="0" step="any" placeholder="예: 2.2"><span>kW</span></div></div>
+            <div class="field"><label id="vi-known-label" for="vi-known">전압 <small>V</small></label><div class="input-wrap"><input id="vi-known" type="number" min="0" step="any" placeholder="예: 220"><span id="vi-known-unit">V</span></div></div>
+          </div>
+          <div class="field"><label for="vi-pf">역률 <small>0 초과 ~ 1 이하</small></label><div class="input-wrap"><input id="vi-pf" type="number" min="0.01" max="1" step="0.01" value="0.9"><span>PF</span></div></div>
+          <button class="calculate" id="vi-calc">계산하기 <span>→</span></button>
+          <div class="clear-row"><button class="clear-button" type="button" data-clear="vi">입력값 지우기</button></div>
+          <div class="result" id="vi-result" aria-live="polite"><div class="result-label">계산 결과 <span>전기값</span></div><div class="result-value">— <small id="vi-output-unit">A</small></div><div class="result-note">값을 입력하고 계산하기를 눌러 주세요.</div></div>
+        </section>
+        <section class="panel" id="panel-eocr" role="tabpanel" hidden>
+          <div class="section-heading"><div><span class="step">03</span><h2>EOCR 전류</h2></div><span class="unit-chip">A</span></div>
+          <p class="helper">모터 출력으로 예상 정격전류를 계산합니다.</p>
+          <div class="field"><label>전원 방식</label><div class="segmented"><button type="button" class="selected" data-eocr-phase="three">삼상</button><button type="button" data-eocr-phase="single">단상</button></div></div>
+          <div class="field-grid">
+            <div class="field"><label for="e-power">모터 출력 <small>kW</small></label><div class="input-wrap"><input id="e-power" type="number" min="0" step="any" placeholder="예: 7.5"><span>kW</span></div></div>
+            <div class="field"><label for="e-voltage">선간전압 <small>V</small></label><div class="input-wrap"><input id="e-voltage" type="number" min="0" step="any" value="380"><span>V</span></div></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label for="e-pf">역률 <small>0 초과 ~ 1 이하</small></label><div class="input-wrap"><input id="e-pf" type="number" min="0.01" max="1" step="0.01" value="0.85"><span>PF</span></div></div>
+            <div class="field"><label for="e-eff">효율 <small>최대 125%</small></label><div class="input-wrap"><input id="e-eff" type="number" min="1" max="125" step="any" value="90"><span>%</span></div></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label for="e-ct-primary">CT 1차 정격 <small>A</small></label><div class="input-wrap"><input id="e-ct-primary" type="number" min="0" step="any" placeholder="예: 100"><span>A</span></div></div>
+            <div class="field"><label for="e-ct-secondary">CT 2차 정격 <small>A</small></label><div class="input-wrap"><input id="e-ct-secondary" type="number" min="0" step="any" placeholder="예: 5"><span>A</span></div></div>
+          </div>
+          <button class="calculate" id="eocr-calc">전류 계산하기 <span>→</span></button>
+          <div class="clear-row"><button class="clear-button" type="button" data-clear="eocr">입력값 지우기</button></div>
+          <div class="result" id="eocr-result" aria-live="polite"><div class="result-label">계산 결과 <span>예상 정격전류</span></div><div class="result-value">— <small>A</small></div><div class="result-note">값을 입력하고 계산하기를 눌러 주세요.</div></div>
+          <div class="notice"><span>i</span><p>CT 1차·2차 정격은 CT 명판대로 입력하세요. 두 값을 비우면 CT 환산 없이 계산합니다. 실제 EOCR 설정은 모터 명판과 제품 설명서를 확인하세요.</p></div>
+        </section>
+        <section class="panel" id="panel-convert" role="tabpanel" hidden>
+          <div class="section-heading"><div><span class="step">04</span><h2>마력·kW 변환</h2></div><span class="unit-chip">HP ↔ kW</span></div>
+          <p class="helper">마력(HP)과 킬로와트(kW)를 서로 변환합니다.</p>
+          <div class="field"><label>변환 방향</label><div class="segmented"><button type="button" class="selected" data-convert="hpkw">마력 → kW</button><button type="button" data-convert="kwhp">kW → 마력</button></div></div>
+          <div class="field"><label id="convert-input-label" for="convert-input">마력 <small>HP</small></label><div class="input-wrap"><input id="convert-input" type="number" min="0" step="any" placeholder="예: 10"><span id="convert-input-unit">HP</span></div></div>
+          <button class="calculate" id="convert-calc">변환하기 <span>→</span></button>
+          <div class="clear-row"><button class="clear-button" type="button" data-clear="convert">입력값 지우기</button></div>
+          <div class="result" id="convert-result" aria-live="polite"><div class="result-label">변환 결과 <span id="convert-result-label">출력</span></div><div class="result-value">— <small id="convert-result-unit">kW</small></div><div class="result-note">변환할 값을 입력하고 버튼을 눌러 주세요.</div></div>
+        </section>
+      </div>
+      <aside class="side-info"><div class="info-icon">ϟ</div><div class="aside-kicker">CALCULATION GUIDE</div><h3 id="guide-title">유효전력이란?</h3><p id="guide-copy">전기기기가 실제로 일을 하는 데 사용되는 전력입니다. 역률을 반영해 계산합니다.</p><div class="formula-card"><span>계산 공식</span><strong id="formula">P = V × I × PF</strong><small id="formula-caption">단상 유효전력</small></div><div class="aside-bottom"><span class="dot"></span> 모든 결과는 반올림하여 표시합니다.</div></aside>
+    </section>
+    <footer><span>전기 계산기 <span class="copyright">·</span> 간편 계산 도구</span><span>단위 확인 후 사용하세요</span></footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
+
