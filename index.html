@@ -19,9 +19,9 @@
       <p>필요한 값을 입력하면 전력과 전류를 바로 계산합니다.</p>
     </section>
     <nav class="tabs" role="tablist" aria-label="계산 종류">
-      <button class="tab active" role="tab" aria-selected="true" data-panel="power"><span class="tab-icon">▤</span> 단상·삼상 전력</button>
+      <button class="tab active" role="tab" aria-selected="true" data-panel="power"><span class="tab-icon">▤</span> 전력</button>
       <button class="tab" role="tab" aria-selected="false" data-panel="vi"><span class="tab-icon">↗</span> 전압·전류</button>
-      <button class="tab" role="tab" aria-selected="false" data-panel="eocr"><span class="tab-icon">◉</span> 삼상 EOCR</button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="eocr"><span class="tab-icon">◉</span> EOCR</button>
       <button class="tab" role="tab" aria-selected="false" data-panel="convert"><span class="tab-icon">⇄</span> HP ↔ kW</button>
     </nav>
     <section class="workspace">
@@ -66,7 +66,7 @@
           </div>
           <div class="field-grid">
             <div class="field"><label for="e-pf">역률 <small>0 초과 ~ 1 이하</small></label><div class="input-wrap"><input id="e-pf" type="number" min="0.01" max="1" step="0.01" value="0.85"><span>PF</span></div></div>
-            <div class="field"><label for="e-eff">효율 <small>최대 125%</small></label><div class="input-wrap"><input id="e-eff" type="number" min="1" max="125" step="any" value="90"><span>%</span></div></div>
+            <div class="field"><label for="e-eff">효율 <small>미입력 시 100% · 최대 125%</small></label><div class="input-wrap"><input id="e-eff" type="number" min="1" max="125" step="any" value="100" placeholder="기본 100"><span>%</span></div></div>
           </div>
           <div class="field-grid">
             <div class="field"><label for="e-ct-primary">CT 1차 정격 <small>A</small></label><div class="input-wrap"><input id="e-ct-primary" type="number" min="0" step="any" placeholder="예: 100"><span>A</span></div></div>
