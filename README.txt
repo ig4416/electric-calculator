@@ -27,5 +27,5 @@ CT비 계산
 iPhone에서 웹으로 사용하기
 - 이 앱은 별도 서버 코드 없이 정적 웹 호스팅에 게시할 수 있도록 구성되어 있습니다.
 - index.html, style.css, app.js를 같은 폴더에 둔 채 HTTPS 주소로 게시하면 iPhone Safari에서 주소를 열어 사용할 수 있습니다.
-- 아직 공개 웹 주소는 연결되지 않았습니다. 게시하려면 GitHub Pages, Netlify, 또는 보유 중인 웹 호스팅 중 하나가 필요합니다.
+- 공개 웹 주소: https://ig4416.github.io/electric-calculator/
 
